@@ -28,30 +28,21 @@ int main(int argc, char const *argv[])
     test.push_back(2);
     test.push_back(1);
 
-    auto it = test.begin();
+    cout << test;
 
-    while (it != test.end())
-    {
-        cout << *it << endl;
-        ++it;
-    }
+    auto it = test.find(3);
 
-    auto fit = test.find(3);
+    if (it != test.end()) cout << "Found: " << *it << endl;
+    else cout << "Not found" << endl;
 
-    if (fit != test.end())
-    {
-        cout << "Found: " << *fit << endl;
-    }
-    else { cout << "Not found" << endl;}
+    it = test.find(6);
 
-    fit = test.find(6);
+    if (it != test.end()) cout << "Found: " << *it << endl;
+    else cout << "Not found" << endl;
 
-    if (fit != test.end())
-    {
-        cout << "Found: " << *fit << endl;
-    }
-    else { cout << "Not found" << endl;}
+    size_t r = hash<string>{}("Hello");
 
+    cout << r << endl;
     
     return 0;
 }

@@ -115,6 +115,7 @@ ostream &operator<<(ostream &lhs, LinkedList<U> &rhs)
     while (it != rhs.end())
     {
         lhs << *it << endl;
+        ++it;
     }
     return lhs;
 }
