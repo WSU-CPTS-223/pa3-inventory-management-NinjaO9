@@ -1,5 +1,7 @@
 #include "libs.h"
 #include "node.hpp"
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
 
 // I think I generally have everything I want in my linked list now - I'll call it complete
 template <typename T>
@@ -149,3 +151,5 @@ void LinkedList<T>::push_back(Node<T> *&node)
     tail = node;
     size++;
 }
+
+#endif

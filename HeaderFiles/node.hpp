@@ -1,5 +1,7 @@
 #include "libs.h"
 #include "productdata.hpp"
+#ifndef NODE_H
+#define NODE_H
 
 // Im happy with my node structure, so I will call it complete (even though I don't think I will ever use the overloaded << operator)
 template <typename T>
@@ -65,3 +67,4 @@ ostream& operator<<(ostream& lhs, Node<T>*& rhs)
     return lhs;
 }
 
+#endif
