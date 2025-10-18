@@ -40,7 +40,6 @@ class Node
 
     bool operator==(const Node<T>*& other);
 
-    ostream& operator<<(ostream& lhs, Node<T>*& rhs);
 
     private:
 
@@ -48,6 +47,10 @@ class Node
     T data;
     Node* next;
 };
+
+template <typename T>
+ostream& operator<<(ostream& lhs, Node<T>*& rhs);
+
 
 template <typename T>
 inline bool Node<T>::operator==(const Node<T> *&other)

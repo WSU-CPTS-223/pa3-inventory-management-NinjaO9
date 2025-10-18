@@ -36,6 +36,22 @@ int main(int argc, char const *argv[])
         ++it;
     }
 
+    auto fit = test.find(3);
+
+    if (fit != test.end())
+    {
+        cout << "Found: " << *fit << endl;
+    }
+    else { cout << "Not found" << endl;}
+
+    fit = test.find(6);
+
+    if (fit != test.end())
+    {
+        cout << "Found: " << *fit << endl;
+    }
+    else { cout << "Not found" << endl;}
+
     
     return 0;
 }

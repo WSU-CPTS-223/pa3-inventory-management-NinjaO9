@@ -68,7 +68,11 @@ class ProductData
 
     string get_productdescription() const {return _ProductDescription;}
 
+    bool operator==(ProductData& other) {return _UniqId == other.get_uniqid();}
 
+    bool operator!=(ProductData& other) {return _UniqId != other.get_uniqid();}
+
+    
     private:
     // _AboutProduct, _Categories <- Might be lists
     const string _UniqId, _ProductName, _BrandName,
@@ -82,12 +86,6 @@ class ProductData
 
 };
 
-/*
-ostream& operator<<(ostream& lhs, ProductData& rhs)
-{
-    lhs << "Uniqe ID: " << rhs.get_uniqid() << " Product Name: " << rhs.get_productname() << endl;
-    return lhs;
-}
-    */
+ostream& operator<<(ostream& lhs, ProductData& rhs);
 
 #endif

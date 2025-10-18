@@ -54,6 +54,8 @@ class LinkedList
 
     iterator end() {return iterator(nullptr);}
 
+    iterator find(const T& val);
+
     template <typename U>
     friend ostream& operator<<(ostream& lhs, LinkedList<U>& rhs);
 
@@ -116,7 +118,19 @@ ostream &operator<<(ostream &lhs, LinkedList<U> &rhs)
     }
     return lhs;
 }
-    
+
+template <typename T>
+typename LinkedList<T>::iterator LinkedList<T>::find(const T &val)
+{
+    auto it = this->begin();
+
+    while (it != this->end() && *it != val)
+    {
+        ++it;
+    }
+
+    return it;
+}
 
 template <typename T>
 void LinkedList<T>::push_back(Node<T> *&node)
