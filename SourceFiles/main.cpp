@@ -1,3 +1,10 @@
+/*
+    David Montes
+    CPTS223
+    PA3 - Amazon Inventory Filter (w/ REPL)
+    Date Started: 10/15/25 (I think)
+*/
+
 #include "../HeaderFiles/REPL.hpp"
 #include "../HeaderFiles/linkedlist.hpp"
 
