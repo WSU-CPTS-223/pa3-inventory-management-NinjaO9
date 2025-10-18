@@ -1,6 +1,7 @@
 #include "libs.h"
 #include "node.hpp"
 
+// I think I generally have everything I want in my linked list now - I'll call it complete
 template <typename T>
 class LinkedList
 {
@@ -10,15 +11,16 @@ class LinkedList
     {
         head = nullptr;
         tail = nullptr;
+        size = 0;
     }
 
     void push_back(const T& data);
 
-    void erase(T& data);
+    void erase(const T& data);
 
-    int getSize();
+    int get_size();
 
-    bool empty() {return (head == nullptr) &&(head == tail);}
+    bool empty() const {return (head == nullptr);}
 
     class iterator
     {
@@ -26,13 +28,23 @@ class LinkedList
 
         iterator(Node<T>* newnode) {node = newnode;}
 
-        void operator++() {if (node) node = node->getNext();}
+        iterator& operator++() 
+        {
+            if (node) node = node->get_next(); 
+            return *this;
+        }
 
-        void operator--() {if (node) node = node->getPrev();}
+        iterator& operator--()
+        {
+            if (node) node = node->get_prev();
+            return *this;
+        }
 
-        bool operator!=(const iterator& other) {return this->node != other.node;}
+        bool operator!=(const iterator& other) const {return this->node != other.node;}
 
-        Node<T>*& operator*() {return this->node;}
+        bool operator==(const iterator& other) const {return this->node == other.node;}
+
+        T& operator*() const {return this->node->get_data();} // Return data rather than node, cause user shouldn't have to mess with node stuff
 
         private:
         Node<T>* node;
@@ -42,7 +54,8 @@ class LinkedList
 
     iterator end() {return iterator(nullptr);}
 
-    //friend ostream& operator<<(ostream& lhs, LinkedList<T>& rhs);
+    template <typename U>
+    friend ostream& operator<<(ostream& lhs, LinkedList<U>& rhs);
 
     private:
 
@@ -62,39 +75,48 @@ void LinkedList<T>::push_back(const T& data)
 }
 
 template <typename T>
-void LinkedList<T>::erase(T &data)
+void LinkedList<T>::erase(const T&data)
 {
+    // This looks ugly, come back to this
     Node<T>* temp = head;
-    while (temp != nullptr && temp->getdata() != data) temp = temp->getNext();
+    while (temp != nullptr && temp->get_data() != data) temp = temp->get_next();
     if (!temp) {return;}
-    if (temp == head){head = head->getNext();}
+    if (temp == head)
+    {
+        head = head->get_next();
+        head->set_prev(nullptr);
+    }
+    else if (temp == tail)
+    {
+        tail = tail->get_prev();
+        tail->set_next(nullptr);
+    }
     else
     {
-        if (temp->getNext()){temp->getNext()->setPrev(temp->getPrev());}
-        temp->getPrev()->setNext(temp->getNext());
+        if (temp->get_next()){temp->get_next()->set_prev(temp->get_prev());}
+        temp->get_prev()->set_next(temp->get_next());
     }
     delete temp;
     --size;
 }
 
 template <typename T>
-inline int LinkedList<T>::getSize()
+inline int LinkedList<T>::get_size()
 {
     return size;
 }
 
-/*
-template <typename T>
-inline ostream &operator<<(ostream &lhs, LinkedList<T> &rhs)
+template <typename U>
+ostream &operator<<(ostream &lhs, LinkedList<U> &rhs)
 {
     auto it = rhs.begin();
     while (it != rhs.end())
     {
-        lhs << (*it);
+        lhs << *it << endl;
     }
     return lhs;
 }
-    */
+    
 
 template <typename T>
 void LinkedList<T>::push_back(Node<T> *&node)
@@ -104,10 +126,11 @@ void LinkedList<T>::push_back(Node<T> *&node)
     {
         head = node;
         tail = head;
+        size++;
         return;
     }
-    tail->setNext(node);
-    node->setPrev(tail);
+    tail->set_next(node);
+    node->set_prev(tail);
     tail = node;
     size++;
 }

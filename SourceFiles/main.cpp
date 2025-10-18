@@ -5,12 +5,12 @@ int main(int argc, char const *argv[])
 {
     /*
     string line;
-    bootStrap();
+    bootstrap();
     while (getline(cin, line) && line != ":quit")
     {
-        if (validCommand(line))
+        if (valid_command(line))
         {
-            evalCommand(line);
+            eval_command(line);
         }
         else
         {
@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
 
     while (it != test.end())
     {
-        cout << (*it)->getdata() << endl;
+        cout << *it << endl;
         ++it;
     }
 

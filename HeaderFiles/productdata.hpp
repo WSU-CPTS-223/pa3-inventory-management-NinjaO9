@@ -2,6 +2,7 @@
 #ifndef PROD_DATA_H
 #define PROD_DATA_H
 
+// Might want to change some things, like datatypes used for categories, etc. Thats a decision I can change later if I see fit, though
 class ProductData
 {
 
@@ -11,61 +12,61 @@ class ProductData
     : _UniqId(nUID), _ProductName(nPN), _BrandName(nBN), _Asin(nAsin), _Categories(nCategories), _UpcEanCode(nUEC), _ListPrice(nLPrice), _SellingPrice(nSPrice), _Quantity(nQuant), _ModelNumber(nModNum), _AboutProduct(nAbtProd), _ProductSpecifications(nProdSpec), _TechnicalDetails(nTechDet), _ShippingWeight(nShipW), _ProductDimensions(nProdDim), _Image(nImage), _Variants(nVars), _Sku(nSku), _ProductUrl(nProdUrl), _Dimensions(nDims), _Color(nColor), _Ingredients(nIngredients), _DirectionToUse(nDirToUse), _IsAmazonSeller(nIsAmaSell), _SizeQuantityVariant(nSQuanVar), _ProductDescription(nProdDesc){}
     // Long ass constructor of doom
 
-    string getUniqId() const {return _UniqId;}
+    string get_uniqid() const {return _UniqId;}
 
-    string getProductName() const {return _ProductName;}
+    string get_productname() const {return _ProductName;}
 
-    string getBrandName() const {return _BrandName;}
+    string get_brandname() const {return _BrandName;}
 
-    string getAsin() const {return _Asin;}
+    string get_asin() const {return _Asin;}
 
-    string getCategories() const {return _Categories;}
+    string get_categories() const {return _Categories;}
 
-    string getUpcEanCode() const {return _UpcEanCode;}
+    string get_upceancode() const {return _UpcEanCode;}
 
-    string getListPrice() const {return _ListPrice;}
+    string get_listprice() const {return _ListPrice;}
 
-    string getSellingPrice() const {return _SellingPrice;}
+    string get_sellingprice() const {return _SellingPrice;}
 
-    string getQuantity() const {return _Quantity;}
+    string get_quantity() const {return _Quantity;}
 
-    string getModelNumber() const {return _ModelNumber;}
+    string get_modelnumber() const {return _ModelNumber;}
 
-    string getAbout() const {return _AboutProduct;}
+    string get_about() const {return _AboutProduct;}
 
-    string getProduceSpecs() const {return _ProductSpecifications;}
+    string get_prodspecs() const {return _ProductSpecifications;}
 
-    string getTechDetails() const {return _TechnicalDetails;}
+    string get_techdetails() const {return _TechnicalDetails;}
 
-    string getShippingWeight() const {return _ShippingWeight;}
+    string get_shippingweight() const {return _ShippingWeight;}
 
-    string getProdDimenstions() const {return _ProductDimensions;}
+    string get_proddimensions() const {return _ProductDimensions;}
 
-    string getImage() const {return _Image;}
+    string get_image() const {return _Image;}
 
-    string getVariants() const {return _Variants;}
+    string get_variants() const {return _Variants;}
 
-    string getSku() const {return _Sku;}
+    string get_sku() const {return _Sku;}
 
-    string getProdUrl() const {return _ProductUrl;}
+    string get_produrl() const {return _ProductUrl;}
 
-    string getStock() const {return _Stock;}
+    string get_stock() const {return _Stock;}
 
-    string getProdDetails() const {return _ProductDetails;}
+    string get_proddetails() const {return _ProductDetails;}
 
-    string getDimensions() const {return _Dimensions;}
+    string get_dimensions() const {return _Dimensions;}
 
-    string getColor() const {return _Color;}
+    string get_color() const {return _Color;}
 
-    string getIngredients() const {return _Ingredients;}
+    string get_ingredients() const {return _Ingredients;}
 
-    string getDirectionToUse() const {return _DirectionToUse;}
+    string get_directiontouse() const {return _DirectionToUse;}
 
-    string getIsAmazonSeller() const {return _IsAmazonSeller;}
+    string get_isamazonseller() const {return _IsAmazonSeller;}
 
-    string getSizeQuantityVariant() const {return _SizeQuantityVariant;}
+    string get_sizequantityvariant() const {return _SizeQuantityVariant;}
 
-    string getProductDescription() const {return _ProductDescription;}
+    string get_productdescription() const {return _ProductDescription;}
 
 
     private:
@@ -84,7 +85,7 @@ class ProductData
 /*
 ostream& operator<<(ostream& lhs, ProductData& rhs)
 {
-    lhs << "Uniqe ID: " << rhs.getUniqId() << " Product Name: " << rhs.getProductName() << endl;
+    lhs << "Uniqe ID: " << rhs.get_uniqid() << " Product Name: " << rhs.get_productname() << endl;
     return lhs;
 }
     */

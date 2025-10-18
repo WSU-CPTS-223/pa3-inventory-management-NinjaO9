@@ -9,14 +9,14 @@ void printHelp()
     cout << " Use :quit to quit the REPL" << endl;
 }
 
-bool validCommand(string line)
+bool valid_command(string line)
 {
     return (line == ":help") ||
            (line.rfind("find", 0) == 0) ||
            (line.rfind("listInventory") == 0);
 }
 
-void evalCommand(string line)
+void eval_command(string line)
 {
     if (line == ":help")
     {
@@ -36,7 +36,7 @@ void evalCommand(string line)
     }
 }
 
-void bootStrap()
+void bootstrap()
 {
     cout << "\n Welcome to Amazon Inventory Query System" << endl;
     cout << " enter :quit to exit. or :help to list supported commands." << endl;

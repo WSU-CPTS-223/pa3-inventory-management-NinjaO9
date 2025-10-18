@@ -1,6 +1,7 @@
 #include "libs.h"
 #include "productdata.hpp"
 
+// Im happy with my node structure, so I will call it complete (even though I don't think I will ever use the overloaded << operator)
 template <typename T>
 class Node
 {
@@ -25,19 +26,21 @@ class Node
         next = nullptr;
     }
 
-    Node*& getPrev() {return prev;}
+    Node*& get_prev() {return prev;}
 
-    void setPrev(Node*& node) {prev=node;}
+    void set_prev(Node*& node) {prev=node;}
 
-    Node*& getNext() {return next;}
+    Node*& get_next() {return next;}
 
-    void setNext(Node*& node) {next=node;}
+    void set_next(Node*& node) {next=node;}
 
-    T& getdata() {return data;}
+    T& get_data() {return data;}
 
-    void setData(T& newdata) {data=newdata;}
+    void set_data(T& newdata) {data=newdata;}
 
     bool operator==(const Node<T>*& other);
+
+    ostream& operator<<(ostream& lhs, Node<T>*& rhs);
 
     private:
 
@@ -51,3 +54,11 @@ inline bool Node<T>::operator==(const Node<T> *&other)
 {
     return this->data == other->data;
 }
+
+template <typename T>
+ostream& operator<<(ostream& lhs, Node<T>*& rhs)
+{
+    lhs << rhs->get_data();
+    return lhs;
+}
+

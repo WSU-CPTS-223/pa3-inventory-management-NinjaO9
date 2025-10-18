@@ -2,8 +2,8 @@
 
 void printHelp();
 
-bool validCommand(string line);
+bool valid_command(string line);
 
-void evalCommand(string line);
+void eval_command(string line);
 
-void bootStrap();
+void bootstrap();
