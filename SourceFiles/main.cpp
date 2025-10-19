@@ -6,19 +6,29 @@
 */
 
 #include "../HeaderFiles/REPL.hpp"
-#include "../HeaderFiles/linkedlist.hpp"
-#include "../HeaderFiles/hashtable.hpp"
 
 int main(int argc, char const *argv[])
 {
+
     /*
+        Nearly done, I just need to figure out some issues where inputs in the csv are inconsistent (Sometimes there will be double quotes)
+        To fix this, I will probably just duplicate the line I used to get rid of whitespace, but instead search for quotes.
+
+        Then, I also need to get the commands working, but the datastructures and algorithms (title drop) that I am using are generally complete, unless I need so come back and do some small modifications (which I will probably do)
+
+    */
+
+    HashTable<string, ProductData> testHash;
+    HashTable<string, LinkedList<ProductData>*> testList;
+    process_csv(testHash, testList);
+
     string line;
     bootstrap();
     while (getline(cin, line) && line != ":quit")
     {
         if (valid_command(line))
         {
-            eval_command(line);
+            eval_command(line, testHash, testList);
         }
         else
         {
@@ -26,43 +36,6 @@ int main(int argc, char const *argv[])
         }
         cout << "> ";
     }
-        */
-
-    LinkedList<int> testList;
-    HashTable<string, int> testHash;
-
-    testHash.insert("Hello!", 6);
-
-    cout << testHash.find("Hello!") << endl;
-    testHash.erase("Hello!");
-    testHash.erase("Hello");
-    cout << testHash["Hello!"] << endl;
-    cout << testHash["Hello"] << endl << endl;
-
-
-
-
-    testList.push_back(5);
-    testList.push_back(4);
-    testList.push_back(3);
-    testList.push_back(2);
-    testList.push_back(1);
-
-    cout << testList;
-
-    auto it = testList.find(3);
-
-    if (it != testList.end()) cout << "Found: " << *it << endl;
-    else cout << "Not found" << endl;
-
-    it = testList.find(6);
-
-    if (it != testList.end()) cout << "Found: " << *it << endl;
-    else cout << "Not found" << endl;
-
-    size_t r = hash<string>{}("Hello");
-
-    cout << r << endl;
     
     return 0;
 }
