@@ -16,6 +16,35 @@ class LinkedList
         size = 0;
     }
 
+    LinkedList(const LinkedList& other)
+    {
+        head = new Node<T>(other.head->get_data());
+        Node<T>* t_temp = head;
+        Node<T>* o_temp = other.head->get_next();
+        // Deep copy
+        while (o_temp != nullptr)
+        {
+            t_temp->set_next(new Node<T>(o_temp->get_data()));
+            o_temp = o_temp->get_next();
+            t_temp = t_temp->get_next();
+        }
+        tail = t_temp;
+        size = other.size;
+    }
+
+    ~LinkedList()
+    {
+        Node<T>* temp = head;
+        while (head != nullptr)
+        {
+            head = head->get_next();
+            delete temp;
+            temp = head;
+        }
+        tail = nullptr;
+        size = 0;
+    }
+
     void push_back(const T& data);
 
     void erase(const T& data);
@@ -23,6 +52,8 @@ class LinkedList
     int get_size();
 
     bool empty() const {return (head == nullptr);}
+
+    void clear();
 
     class iterator
     {
@@ -108,6 +139,21 @@ template <typename T>
 inline int LinkedList<T>::get_size()
 {
     return size;
+}
+
+template <typename T>
+void LinkedList<T>::clear()
+{
+    // Basically the same as the deconstructor
+    Node<T>* temp = head;
+        while (head != nullptr)
+        {
+            head = head->get_next();
+            delete temp;
+            temp = head;
+        }
+        tail = nullptr;
+        size = 0;
 }
 
 template <typename U>

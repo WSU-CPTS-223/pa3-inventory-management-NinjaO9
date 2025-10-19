@@ -1,5 +1,4 @@
 #include "libs.h"
-#include "productdata.hpp"
 #ifndef NODE_H
 #define NODE_H
 
@@ -21,10 +20,16 @@ class Node
         next = nullptr;
     }
 
+    Node(const Node<T>*& other)
+    {
+        this->data = other->data;
+        this->next = other->next;
+        this->prev = other->prev;
+    }
+
     ~Node()
     {
         prev = nullptr;
-        delete data;
         next = nullptr;
     }
 

@@ -8,9 +8,15 @@ class ProductData
 
     public:
 
+    ProductData() = default;
+
     ProductData(string nUID, string nPN, string nBN, string nAsin, string nCategories, string nUEC, string nLPrice, string nSPrice, string nQuant, string nModNum, string nAbtProd, string nProdSpec, string nTechDet, string nShipW, string nProdDim, string nImage, string nVars, string nSku, string nProdUrl, string nDims, string nColor, string nIngredients, string nDirToUse, string nIsAmaSell, string nSQuanVar, string nProdDesc)
     : _UniqId(nUID), _ProductName(nPN), _BrandName(nBN), _Asin(nAsin), _Categories(nCategories), _UpcEanCode(nUEC), _ListPrice(nLPrice), _SellingPrice(nSPrice), _Quantity(nQuant), _ModelNumber(nModNum), _AboutProduct(nAbtProd), _ProductSpecifications(nProdSpec), _TechnicalDetails(nTechDet), _ShippingWeight(nShipW), _ProductDimensions(nProdDim), _Image(nImage), _Variants(nVars), _Sku(nSku), _ProductUrl(nProdUrl), _Dimensions(nDims), _Color(nColor), _Ingredients(nIngredients), _DirectionToUse(nDirToUse), _IsAmazonSeller(nIsAmaSell), _SizeQuantityVariant(nSQuanVar), _ProductDescription(nProdDesc){}
     // Long ass constructor of doom
+
+    ProductData(const ProductData& other) = default;
+
+    ~ProductData() = default;
 
     string get_uniqid() const {return _UniqId;}
 
@@ -75,7 +81,7 @@ class ProductData
     
     private:
     // _AboutProduct, _Categories <- Might be lists
-    const string _UniqId, _ProductName, _BrandName,
+    string _UniqId, _ProductName, _BrandName,
      _Asin, _Categories, _UpcEanCode, _ListPrice, 
      _SellingPrice, _Quantity, _ModelNumber, _AboutProduct, 
      _ProductSpecifications, _TechnicalDetails, _ShippingWeight,
