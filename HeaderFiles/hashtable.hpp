@@ -13,7 +13,7 @@
 
 */
 // array of primes to allow rehashing.
-const int primes[6] = {101, 211, 401, 809, 1601, 3299};
+const int primes[9] = {101, 211, 401, 809, 1601, 3299, 7057, 14143, 28289};
 
 template <typename Key, typename T, typename Hash = hash<Key>>
 class HashTable
@@ -26,7 +26,7 @@ class HashTable
 
     ~HashTable() = default;
 
-    void insert(const Key key, const T& value, const bool isRehashing = false);
+    void insert(const Key key, const T value, const bool isRehashing = false);
 
     T find(const Key& key);
 
@@ -60,7 +60,7 @@ class HashTable
     
     int size = 0;
     int count = 0;
-    const int attempts = 3;
+    const int attempts = 6;
 
     struct Bucket* table;
 
@@ -79,17 +79,21 @@ HashTable<Key, T, Hash>::HashTable()
 }
 
 template <typename Key, typename T, typename Hash>
-void HashTable<Key, T, Hash>::insert(const Key key, const T& value, const bool isRehashing)
+void HashTable<Key, T, Hash>::insert(const Key key, const T value, const bool isRehashing)
 {
     int attempt = 0;
     size_t index = 0;
 
-    for (; attempt < attempts; attempt++)
+    //cout << "INSERTING: " << key << endl;
+
+    for (;attempt < attempts; ++attempt)
     {
+        //cout << "Searching..." << "(Size = " << size << ") (Load factor = " << (double)count/(double)size << ")" << endl;
         index = (Hash{}(key) + (int)pow(attempt, 2)) % size;
+        //cout << "Proposed index: " << index << "Attempt: " << attempt << "Offset: " << (int)pow(attempt,2) << endl;
         //cout << table[index].state << endl;
         // If we have duplicate keys, then we will act like we are 'updating' the data
-        if (table[index].state != POPULATED && table[index].key != key)
+        if (table[index].state == EMPTY || table[index].state == DELETED || table[index].key == key)
         {
             table[index].key = key;
             table[index].data = value;
@@ -158,8 +162,9 @@ template <typename Key, typename T, typename Hash>
 void HashTable<Key, T, Hash>::rehash()
 {
     double loadfactor = (double)count/(double)size;
-    cout << "Load factor: " << loadfactor << endl;
     if (loadfactor < MAX_LOAD) return;
+    //cout << "Load factor: " << loadfactor << endl;
+    //cout << "Rehashing.." << endl;
     int newsize = size;
     for (int prime : primes)
     {
@@ -177,15 +182,20 @@ void HashTable<Key, T, Hash>::rehash()
     struct Bucket* newtable = new Bucket[size];
     struct Bucket* temp = table;
     table = newtable;
-
+    for (int i = 0; i < size; i++)
+    {
+        table[i].data = T();
+        table[i].state = EMPTY;
+    }
     for (int i = 0; i <oldsize; i++)
     {
         if (temp[i].state == POPULATED)
         {
-            insert(temp[i].key, table[i].data, true);
+            insert(temp[i].key, temp[i].data, true);
         }
     }
     delete[] temp;
+    //cout << "Rehash complete!" << endl;
 
 }
 
