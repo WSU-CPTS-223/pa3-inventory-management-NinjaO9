@@ -2,13 +2,48 @@
 #ifndef PROD_DATA_H
 #define PROD_DATA_H
 
+typedef enum attributes
+{
+    UNIQ_ID,
+    PRODUCT_NAME,
+    BRAND_NAME,
+    ASIN,
+    CATEGORY,
+    UPC_EAN_CODE,
+    LIST_PRICE,
+    SELLING_PRICE,
+    QUANTITY,
+    MODEL_NUMBER,
+    ABOUT_PRODUCT,
+    PRODUCT_SPECIFICATION,
+    TECHNICAL_DETAILS,
+    SHIPPING_WEIGHT,
+    PRODUCT_DIMENSIONS,
+    IMAGE,
+    VARIANTS,
+    SKU,
+    PRODUCT_URL,
+    STOCK,
+    PRODUCT_DETAILS,
+    DIMENSIONS,
+    COLOR,
+    INGREDIENTS,
+    DIRECTION_TO_USE,
+    IS_AMAZON_SELLER,
+    SIZE_QUANTITY_VARIANT,
+    PRODUCT_DESCRIPTION,
+    LAST
+}Attributes;
+
 // Might want to change some things, like datatypes used for categories, etc. Thats a decision I can change later if I see fit, though
 class ProductData
 {
 
     public:
 
-    ProductData() = default;
+    ProductData() : _UniqId("N/A"), _ProductName("N/A"), _BrandName("N/A"), _Asin("N/A"), _Categories("N/A"), _UpcEanCode("N/A"), _ListPrice("N/A"), _SellingPrice("N/A"), _Quantity("N/A"), _ModelNumber("N/A"), _AboutProduct("N/A"), _ProductSpecifications("N/A"), _TechnicalDetails("N/A"), _ShippingWeight("N/A"), _ProductDimensions("N/A"), _Image("N/A"), _Variants("N/A"), _Sku("N/A"), _ProductUrl("N/A"), _Dimensions("N/A"), _Color("N/A"), _Ingredients("N/A"), _DirectionToUse("N/A"), _IsAmazonSeller("N/A"), _SizeQuantityVariant("N/A"), _ProductDescription("N/A"){};
+
+    ProductData(string attr[]);
 
     ProductData(string nUID, string nPN, string nBN, string nAsin, string nCategories, string nUEC, string nLPrice, string nSPrice, string nQuant, string nModNum, string nAbtProd, string nProdSpec, string nTechDet, string nShipW, string nProdDim, string nImage, string nVars, string nSku, string nProdUrl, string nDims, string nColor, string nIngredients, string nDirToUse, string nIsAmaSell, string nSQuanVar, string nProdDesc)
     : _UniqId(nUID), _ProductName(nPN), _BrandName(nBN), _Asin(nAsin), _Categories(nCategories), _UpcEanCode(nUEC), _ListPrice(nLPrice), _SellingPrice(nSPrice), _Quantity(nQuant), _ModelNumber(nModNum), _AboutProduct(nAbtProd), _ProductSpecifications(nProdSpec), _TechnicalDetails(nTechDet), _ShippingWeight(nShipW), _ProductDimensions(nProdDim), _Image(nImage), _Variants(nVars), _Sku(nSku), _ProductUrl(nProdUrl), _Dimensions(nDims), _Color(nColor), _Ingredients(nIngredients), _DirectionToUse(nDirToUse), _IsAmazonSeller(nIsAmaSell), _SizeQuantityVariant(nSQuanVar), _ProductDescription(nProdDesc){}
@@ -92,6 +127,6 @@ class ProductData
 
 };
 
-ostream& operator<<(ostream& lhs, ProductData& rhs);
+ostream& operator<<(ostream& lhs, const ProductData& rhs);
 
 #endif

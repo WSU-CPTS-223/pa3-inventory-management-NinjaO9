@@ -16,6 +16,13 @@ class LinkedList
         size = 0;
     }
 
+    LinkedList(const T& data)
+    {
+        head = new Node<T>(data);
+        tail = head;
+        size = 1;
+    }
+
     LinkedList(const LinkedList& other)
     {
         head = new Node<T>(other.head->get_data());

@@ -35,11 +35,11 @@ class Node
 
     Node*& get_prev() {return prev;}
 
-    void set_prev(Node*& node) {prev=node;}
+    void set_prev(Node* node) {prev=node;}
 
     Node*& get_next() {return next;}
 
-    void set_next(Node*& node) {next=node;}
+    void set_next(Node* node) {next=node;}
 
     T& get_data() {return data;}
 
@@ -50,9 +50,9 @@ class Node
 
     private:
 
-    Node* prev;
+    Node<T>* prev;
     T data;
-    Node* next;
+    Node<T>* next;
 };
 
 template <typename T>
