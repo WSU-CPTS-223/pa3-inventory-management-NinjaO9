@@ -34,6 +34,8 @@ int main(int argc, char const *argv[])
     testHash.insert("Hello!", 6);
 
     cout << testHash.find("Hello!") << endl;
+    testHash.erase("Hello!");
+    testHash.erase("Hello");
     cout << testHash["Hello!"] << endl;
     cout << testHash["Hello"] << endl << endl;
 

@@ -12,7 +12,8 @@
     Unordered map showcases something about buckets. This could be helpful for separating a populated, empty, and deleted parts of the table (https://en.cppreference.com/w/cpp/container/unordered_map.html)
 
 */
-int primes[6] = {101, 211, 401, 809, 1601, 3299};
+// array of primes to allow rehashing.
+const int primes[6] = {101, 211, 401, 809, 1601, 3299};
 
 template <typename Key, typename T, typename Hash = hash<Key>>
 class HashTable
@@ -25,7 +26,7 @@ class HashTable
 
     ~HashTable() = default;
 
-    void insert(const Key key, const T& value);
+    void insert(const Key key, const T& value, const bool isRehashing = false);
 
     T find(const Key& key);
 
@@ -57,26 +58,28 @@ class HashTable
     void rehash();
 
     
-    int size = MIN_SIZE;
+    int size = 0;
     int count = 0;
     const int attempts = 3;
 
-    struct Bucket table[MIN_SIZE];
+    struct Bucket* table;
 
 };
 
 template <typename Key, typename T, typename Hash>
 HashTable<Key, T, Hash>::HashTable()
 {
-    for (auto& bucket : table)
+    table = new Bucket[MIN_SIZE];
+    size = MIN_SIZE;
+    for (int i = 0; i < size; i++)
     {
-        bucket.data = T();
-        bucket.state = EMPTY;
+        table[i].data = T();
+        table[i].state = EMPTY;
     }
 }
 
 template <typename Key, typename T, typename Hash>
-void HashTable<Key, T, Hash>::insert(const Key key, const T& value)
+void HashTable<Key, T, Hash>::insert(const Key key, const T& value, const bool isRehashing)
 {
     int attempt = 0;
     size_t index = 0;
@@ -91,8 +94,10 @@ void HashTable<Key, T, Hash>::insert(const Key key, const T& value)
             table[index].key = key;
             table[index].data = value;
             table[index].state = POPULATED;
+            count++;
             //cout << "Inserted!" << endl;
-            rehash();
+            // if statement to prevent recursion when rehashing
+            if (!isRehashing) rehash();
             return;
         }
     }
@@ -121,6 +126,29 @@ T HashTable<Key, T, Hash>::find(const Key &key)
 }
 
 template <typename Key, typename T, typename Hash>
+void HashTable<Key, T, Hash>::erase(const Key &key)
+{
+    int attempt = 0;
+    size_t index = 0;
+    for (; attempt < attempts; attempt++)
+    {
+        index = (Hash{}(key) + (int)pow(attempt, 2)) % size;
+        if (table[index].state == POPULATED && table[index].key == key)
+        {
+            break;
+        }
+        if (table[index].state == EMPTY) return;
+    }
+
+    if (table[index].state != POPULATED) return;
+
+    table[index].key = Key();
+    table[index].data = T();
+    table[index].state = DELETED;
+
+}
+
+template <typename Key, typename T, typename Hash>
 T HashTable<Key, T, Hash>::operator[](const Key &key)
 {
     return find(key);
@@ -132,29 +160,32 @@ void HashTable<Key, T, Hash>::rehash()
     double loadfactor = (double)count/(double)size;
     cout << "Load factor: " << loadfactor << endl;
     if (loadfactor < MAX_LOAD) return;
-
     int newsize = size;
     for (int prime : primes)
     {
-        if (prime > newsize)
+        if (prime > size)
         {
             newsize = prime;
             break;
         }
     }
-    /*
-    struct Bucket newtable = new Bucket[newsize];
-    struct Bucket temp = table;
+
+    if (newsize == size) return; // Uh-oh, we ran out of space (Trivial solution is to add more prime numbers lol)
+
+    int oldsize = size;
+    size = newsize;
+    struct Bucket* newtable = new Bucket[size];
+    struct Bucket* temp = table;
     table = newtable;
-    for (struct Bucket bucket : temp)
+
+    for (int i = 0; i <oldsize; i++)
     {
-        if (bucket.state == POPULATED)
+        if (temp[i].state == POPULATED)
         {
-            insert(bucket.key, bucket.data);
+            insert(temp[i].key, table[i].data, true);
         }
     }
     delete[] temp;
-    */
 
 }
 
