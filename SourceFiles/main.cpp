@@ -7,6 +7,7 @@
 
 #include "../HeaderFiles/REPL.hpp"
 #include "../HeaderFiles/linkedlist.hpp"
+#include "../HeaderFiles/hashtable.hpp"
 
 int main(int argc, char const *argv[])
 {
@@ -27,24 +28,34 @@ int main(int argc, char const *argv[])
     }
         */
 
-    LinkedList<int> test;
+    LinkedList<int> testList;
+    HashTable<string, int> testHash;
 
-    test.push_back(5);
-    test.push_back(4);
-    test.push_back(3);
-    test.push_back(2);
-    test.push_back(1);
+    testHash.insert("Hello!", 6);
 
-    cout << test;
+    cout << testHash.find("Hello!") << endl;
+    cout << testHash["Hello!"] << endl;
+    cout << testHash["Hello"] << endl << endl;
 
-    auto it = test.find(3);
 
-    if (it != test.end()) cout << "Found: " << *it << endl;
+
+
+    testList.push_back(5);
+    testList.push_back(4);
+    testList.push_back(3);
+    testList.push_back(2);
+    testList.push_back(1);
+
+    cout << testList;
+
+    auto it = testList.find(3);
+
+    if (it != testList.end()) cout << "Found: " << *it << endl;
     else cout << "Not found" << endl;
 
-    it = test.find(6);
+    it = testList.find(6);
 
-    if (it != test.end()) cout << "Found: " << *it << endl;
+    if (it != testList.end()) cout << "Found: " << *it << endl;
     else cout << "Not found" << endl;
 
     size_t r = hash<string>{}("Hello");
