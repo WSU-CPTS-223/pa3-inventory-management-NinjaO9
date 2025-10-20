@@ -22,7 +22,7 @@ class HashTable
 
     HashTable();
 
-    HashTable(HashTable& other);
+    HashTable(const HashTable& other);
 
     ~HashTable() = default;
 
@@ -75,6 +75,17 @@ HashTable<Key, T, Hash>::HashTable()
     {
         table[i].data = T();
         table[i].state = EMPTY;
+    }
+}
+
+template <typename Key, typename T, typename Hash>
+inline HashTable<Key, T, Hash>::HashTable(const HashTable &other)
+{
+    size = other.size;
+    count = other.count;
+    for (int i = 0; i < size; ++i)
+    {
+        table[i] = other.table[i];
     }
 }
 

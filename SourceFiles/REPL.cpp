@@ -43,7 +43,8 @@ void eval_command(string line, HashTable<string, ProductData>& product_table, Ha
     {
         // Look up the appropriate datastructure to find if the inventory exist
         //cout << "YET TO IMPLEMENT!" << endl;
-        cout << product_table["fca4a2170dbe85896ac3daff0a7f1e1b"] << endl;
+        auto prod =  product_table["88f6235d5f16bcaf83a9fd886bfdd565"];
+        cout << "Categories: " << prod.get_categories() << endl;
     }
     // if line starts with listInventory
     else if (line.rfind("listInventory") == 0)
@@ -91,21 +92,35 @@ void process_csv(HashTable<string, ProductData>& product_table, HashTable<string
 // Modified code from the previous PA
 ProductData parse_line(string line)
 {
-
     string::size_type cindex1 = 0, cindex2 = 0;
     unsigned int index = UNIQ_ID;
     string fields[28] = {};
+    string sub;
 
     while (index != LAST)
     {
-        cindex2 = line.find(",", cindex1);
-        if (cindex2 == string::npos)
-            cindex2 = line.length() - 1;
-        fields[index] = line.substr(cindex1, cindex2 - cindex1);
-        cindex1 = cindex2 + 1;
+        // next item is in quotes
+        if (line[cindex1] == '\"')
+        {
+            cindex2 = line.find("\"", cindex1 + 1);
+            if (cindex2 == string::npos) cindex2 = line.length() - 1;
+            sub = line.substr(cindex1 + 1, (cindex2 - 1) - cindex1);
+            cindex1 = cindex2 + 2;
+
+        }
+        else // We can parse normally
+        {
+            cindex2 = line.find(",", cindex1);
+            if (cindex2 == string::npos) cindex2 = line.length() - 1;
+            sub = line.substr(cindex1, cindex2 - cindex1);
+            cindex1 = cindex2 + 1;
+        }
+        if (sub == "") sub = "N/A";
+        fields[index] = sub;
         index++;
     }
     return ProductData(fields);
+
 }
 
 void place_into_categories(const ProductData data, HashTable<string, LinkedList<ProductData>*>& category_table)
@@ -122,7 +137,6 @@ void place_into_categories(const ProductData data, HashTable<string, LinkedList<
         if (cindex2 == string::npos)
             cindex2 = line.length() + 1;
         sub = line.substr(cindex1, (cindex2 - 1) - cindex1);
-        sub.erase(remove_if(sub.begin(), sub.end(), ::isspace), sub.end());
         categories.push_back(sub);
         cindex1 = cindex2 + 1;
     }
