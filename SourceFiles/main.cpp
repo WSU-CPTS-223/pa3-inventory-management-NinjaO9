@@ -11,10 +11,7 @@ int main(int argc, char const *argv[])
 {
 
     /*
-        Nearly done, I just need to figure out some issues where inputs in the csv are inconsistent (Sometimes there will be double quotes)
-        To fix this, I will probably just duplicate the line I used to get rid of whitespace, but instead search for quotes.
-
-        Then, I also need to get the commands working, but the datastructures and algorithms (title drop) that I am using are generally complete, unless I need so come back and do some small modifications (which I will probably do)
+        Everything seems functional, but for some reason my terminal freeses up after running listInventory. Debugger shows everything is fine though...
 
     */
 

@@ -34,6 +34,9 @@ bool valid_command(string line)
 
 void eval_command(string line, HashTable<string, ProductData>& product_table, HashTable<string, LinkedList<ProductData>*>& category_table)
 {
+    istringstream iss(line);
+    string command, argument;
+    
     if (line == ":help")
     {
         print_help();
@@ -41,16 +44,37 @@ void eval_command(string line, HashTable<string, ProductData>& product_table, Ha
     // if line starts with find
     else if (line.rfind("find", 0) == 0)
     {
-        // Look up the appropriate datastructure to find if the inventory exist
-        //cout << "YET TO IMPLEMENT!" << endl;
-        auto prod =  product_table["88f6235d5f16bcaf83a9fd886bfdd565"];
-        cout << "Categories: " << prod.get_categories() << endl;
+        iss >> command >> argument;
+        auto prod =  product_table[argument];
+        if (prod.get_uniqid() == "N/A")
+            cout << "Product \"" << argument << "\" was not found" << endl;
+        else
+            cout << "Categories: " << prod.get_categories() << endl;
     }
     // if line starts with listInventory
     else if (line.rfind("listInventory") == 0)
     {
-        // Look up the appropriate datastructure to find all inventory belonging to a specific category
-        cout << "YET TO IMPLEMENT!" << endl;
+        iss >> command;
+        argument = line.substr(command.length(), line.size());
+        argument.erase(remove_if(argument.begin(), argument.end(), ::isspace), argument.end()); // Remove whitespace - Reminder to myself to do this for user input too
+
+        auto prod = category_table[argument];
+        if (prod == nullptr)
+            cout << "Category \"" << argument << "\" was not found" << endl;
+        else
+        {
+            auto it = prod->begin();
+            cout << prod->get_size() << endl;
+            while (it != prod->end())
+            {
+                if ((*it).get_productname() == "Heroes Wanted: Breaking News Expansion")
+                {
+                    cout << "PAUSE" << endl;
+                }
+                cout << "Product: " << (*it).get_productname() << endl;
+                ++it;
+            }
+        }
     }
 }
 
@@ -92,7 +116,7 @@ void process_csv(HashTable<string, ProductData>& product_table, HashTable<string
 // Modified code from the previous PA
 ProductData parse_line(string line)
 {
-    string::size_type cindex1 = 0, cindex2 = 0;
+    string::size_type cindex1 = 0, cindex2 = 0, tempindex = 0;
     unsigned int index = UNIQ_ID;
     string fields[28] = {};
     string sub;
@@ -102,7 +126,12 @@ ProductData parse_line(string line)
         // next item is in quotes
         if (line[cindex1] == '\"')
         {
-            cindex2 = line.find("\"", cindex1 + 1);
+            tempindex = cindex1;
+            while (line[cindex2 + 1] != ',') // incase we get baited with another double quote inside of double quotes, we will search for the quote which has a comma next to it
+            {
+                cindex2 = line.find("\"", tempindex + 1);
+                tempindex = cindex2;
+            }
             if (cindex2 == string::npos) cindex2 = line.length() - 1;
             sub = line.substr(cindex1 + 1, (cindex2 - 1) - cindex1);
             cindex1 = cindex2 + 2;
@@ -137,6 +166,7 @@ void place_into_categories(const ProductData data, HashTable<string, LinkedList<
         if (cindex2 == string::npos)
             cindex2 = line.length() + 1;
         sub = line.substr(cindex1, (cindex2 - 1) - cindex1);
+        sub.erase(remove_if(sub.begin(), sub.end(), ::isspace), sub.end()); // Remove whitespace - Reminder to myself to do this for user input too
         categories.push_back(sub);
         cindex1 = cindex2 + 1;
     }
