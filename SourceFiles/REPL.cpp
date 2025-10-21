@@ -67,10 +67,6 @@ void eval_command(string line, HashTable<string, ProductData>& product_table, Ha
             cout << prod->get_size() << endl;
             while (it != prod->end())
             {
-                if ((*it).get_productname() == "Heroes Wanted: Breaking News Expansion")
-                {
-                    cout << "PAUSE" << endl;
-                }
                 cout << "Product: " << (*it).get_productname() << endl;
                 ++it;
             }
@@ -83,11 +79,6 @@ void bootstrap()
     cout << "\n Welcome to Amazon Inventory Query System" << endl;
     cout << " enter :quit to exit. or :help to list supported commands." << endl;
     cout << "\n> ";
-
-    // TODO: Do all your bootstrap operations here
-    // example: reading from CSV and initializing the data structures
-    // Don't dump all code into this single function
-    // use proper programming practices
 }
 
 void process_csv(HashTable<string, ProductData>& product_table, HashTable<string, LinkedList<ProductData>*>& category_table)
@@ -182,4 +173,40 @@ void place_into_categories(const ProductData data, HashTable<string, LinkedList<
             category_table.insert(*it, new LinkedList<ProductData>(data));
         }
     }
+}
+
+void testfind(HashTable<string, ProductData> &product_table)
+{
+    cout << "\nTESTING 'find' FUNCTION..." << endl;
+    
+    // Verify we get the right id when we search
+    assert(product_table["0209fe49ac75286f055bc63e5e27057d"] == ProductData("0209fe49ac75286f055bc63e5e27057d"));
+    cout << "Test 1 Passed!" << endl;
+
+    // Verify that an invalid string causes the return of a ProductData() with no valid data
+    assert(product_table["invalid_string"] == ProductData());
+    cout << "Test 2 Passed!" << endl;
+
+    // Verify that a valid string does not equate to a different ProductData()
+    assert(product_table["0209fe49ac75286f055bc63e5e27057d"] != ProductData("d516f10bef403c906022e28a9f39b3f7"));
+    cout << "Test 3 Passed!" << endl;
+}
+
+void testlisstInventory(HashTable<string, LinkedList<ProductData> *> &category_table)
+{
+    cout << "\nTESTING 'listInventory' FUNCTION..." << endl;
+
+    // Verify we ONLY get products that contain the correct categories (if find() returns npos, then the subtring of the category was not found)
+    // Q: "Why does the categor have no spaces?" A: When categories are stored, their whitespace is removed. Equavalently, when a user queues for a category, the whitespace gets removed.
+    auto it = category_table["Costumes&Accessories"]->begin();
+    while (it != nullptr)
+    {
+        assert((*it).get_categories().find("Costumes & Accessories") != string::npos);
+        ++it;
+    }
+    cout << "Test 1 Passed!" << endl;
+
+    // Verify that we get an empty list of products if we enter an invalid category
+    assert(category_table["invalid_string"] == nullptr);
+    cout << "Test 2 Passed!" << endl;
 }

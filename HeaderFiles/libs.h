@@ -9,6 +9,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cctype>
+#include <cassert>
 
 using namespace std;
 

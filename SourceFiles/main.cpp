@@ -9,15 +9,12 @@
 
 int main(int argc, char const *argv[])
 {
-
-    /*
-        Everything seems functional, but for some reason my terminal freeses up after running listInventory. Debugger shows everything is fine though...
-
-    */
-
     HashTable<string, ProductData> testHash;
     HashTable<string, LinkedList<ProductData>*> testList;
     process_csv(testHash, testList);
+
+    testfind(testHash);
+    testlisstInventory(testList);
 
     string line;
     bootstrap();

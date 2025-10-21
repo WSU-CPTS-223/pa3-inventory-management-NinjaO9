@@ -41,11 +41,9 @@ class ProductData
 
     public:
 
-    ProductData() : _UniqId("N/A"), _ProductName("N/A"), _BrandName("N/A"), _Asin("N/A"), _Categories("N/A"), _UpcEanCode("N/A"), _ListPrice("N/A"), _SellingPrice("N/A"), _Quantity("N/A"), _ModelNumber("N/A"), _AboutProduct("N/A"), _ProductSpecifications("N/A"), _TechnicalDetails("N/A"), _ShippingWeight("N/A"), _ProductDimensions("N/A"), _Image("N/A"), _Variants("N/A"), _Sku("N/A"), _ProductUrl("N/A"), _Dimensions("N/A"), _Color("N/A"), _Ingredients("N/A"), _DirectionToUse("N/A"), _IsAmazonSeller("N/A"), _SizeQuantityVariant("N/A"), _ProductDescription("N/A"){};
-
     ProductData(string attr[]);
 
-    ProductData(string nUID, string nPN, string nBN, string nAsin, string nCategories, string nUEC, string nLPrice, string nSPrice, string nQuant, string nModNum, string nAbtProd, string nProdSpec, string nTechDet, string nShipW, string nProdDim, string nImage, string nVars, string nSku, string nProdUrl, string nDims, string nColor, string nIngredients, string nDirToUse, string nIsAmaSell, string nSQuanVar, string nProdDesc)
+    ProductData(string nUID = "N/A", string nPN = "N/A", string nBN = "N/A", string nAsin = "N/A", string nCategories = "N/A", string nUEC = "N/A", string nLPrice = "N/A", string nSPrice = "N/A", string nQuant = "N/A", string nModNum = "N/A", string nAbtProd = "N/A", string nProdSpec = "N/A", string nTechDet = "N/A", string nShipW = "N/A", string nProdDim = "N/A", string nImage = "N/A", string nVars = "N/A", string nSku = "N/A", string nProdUrl = "N/A", string nDims = "N/A", string nColor = "N/A", string nIngredients = "N/A", string nDirToUse = "N/A", string nIsAmaSell = "N/A", string nSQuanVar = "N/A", string nProdDesc = "N/A")
     : _UniqId(nUID), _ProductName(nPN), _BrandName(nBN), _Asin(nAsin), _Categories(nCategories), _UpcEanCode(nUEC), _ListPrice(nLPrice), _SellingPrice(nSPrice), _Quantity(nQuant), _ModelNumber(nModNum), _AboutProduct(nAbtProd), _ProductSpecifications(nProdSpec), _TechnicalDetails(nTechDet), _ShippingWeight(nShipW), _ProductDimensions(nProdDim), _Image(nImage), _Variants(nVars), _Sku(nSku), _ProductUrl(nProdUrl), _Dimensions(nDims), _Color(nColor), _Ingredients(nIngredients), _DirectionToUse(nDirToUse), _IsAmazonSeller(nIsAmaSell), _SizeQuantityVariant(nSQuanVar), _ProductDescription(nProdDesc){}
     // Long ass constructor of doom
 
@@ -109,9 +107,9 @@ class ProductData
 
     string get_productdescription() const {return _ProductDescription;}
 
-    bool operator==(ProductData& other) {return _UniqId == other.get_uniqid();}
+    bool operator==(const ProductData& other) {return _UniqId == other.get_uniqid();}
 
-    bool operator!=(ProductData& other) {return _UniqId != other.get_uniqid();}
+    bool operator!=(const ProductData& other) {return _UniqId != other.get_uniqid();}
 
     
     private:

@@ -1,4 +1,3 @@
-#include "libs.h"
 #include "../HeaderFiles/linkedlist.hpp"
 #include "../HeaderFiles/hashtable.hpp"
 #include "../HeaderFiles/productdata.hpp"
@@ -17,3 +16,7 @@ void process_csv(HashTable<string, ProductData>& product_table, HashTable<string
 ProductData parse_line(string line);
 
 void place_into_categories(const ProductData data, HashTable<string, LinkedList<ProductData>*>& category_table);
+
+void testfind(HashTable<string, ProductData>& product_table);
+
+void testlisstInventory(HashTable<string, LinkedList<ProductData>*>& category_table);
