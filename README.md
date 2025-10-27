@@ -52,3 +52,12 @@ Additionally, I think it would be a good idea to simply have each index in the h
 - Each list node contains pointers to a 'data' container, or something similar. 
 - Each data container has a value that indicates how many things a given data node is connected to
 - During deletion, if the 'linked' value reaches 0, then the node itself gets deleted (shouldn't happen for this PA, but figured it would be good to include)
+
+# TEST CASES
+1. On the 'Find' function:
+  - Test 1. Testing the find function gets the correct item (Comparing the returned result with a new item which contains the same unique id)
+  - Test 2. Testing if the find function returns an 'invalid' item when an invalid string is provided (ProductData is initalized to 'N/A' when created, which is what an invalid lookup should return)
+  - Test 3. Testing the find function does not return information of a different product (unique ids should not match)
+2. On the 'listInventory' function:
+  - Test 1. Testing if all the items inside a given function call contain the desired category (If there exists an item that does not have the category that was queried, something went wrong)
+  - Test 2. Testing if an empty list of products is given when an invalid string is provided (if the category doesn't exist, then there is nothing to show)
